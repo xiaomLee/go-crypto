@@ -4,6 +4,7 @@ Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"fmt"
 	"go-crypto/aes"
 	"go-crypto/crypto-cli/config"
 	"go-crypto/version"
@@ -34,16 +35,16 @@ var rootCmd = &cobra.Command{
 	Use:     version.App,
 	Version: version.FullVersionInfo(),
 	Short:   "文件加解密工具",
-	Long: `文件加解密工具.
+	Long: fmt.Sprintf(`文件加解密工具.
 原理: 
-参考 HTTPS 原理. 原始数据库使用对称加密算法 AES 进行加密, AES 所使用的密钥通过非对称加密算法 RSA 进行加密并存储于原始加密数据的头部;
+参考 HTTPS, 原始数据库使用对称加密算法 AES 进行加密, AES 所使用的密钥通过非对称加密算法 RSA 进行加密并存储于原始加密数据的头部;
 通过 HASH(MD5) 算法支持文件自校验.
 
 使用示例:
-crypto-cli encrypt --public-key public.key -f your-src.file -o ciphered.file
-crypto-cli encrypt -g -f your.file -o ciphered.file
-crypto-cli encrypt --public-key public.key --security aes-256-cbc -f your.file -o ciphered.file
-crypto-cli decrypt --private-key private.key -f your-src.file -o unciphered.file`,
+%s encrypt --public-key public.key -f your-src.file -o ciphered.file
+%s encrypt -g -f your.file -o ciphered.file
+%s encrypt --public-key public.key --security aes-256-cbc -f your.file -o ciphered.file
+%s decrypt --private-key private.key -f your-src.file -o unciphered.file`, version.App, version.App, version.App, version.App),
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
 		rand.Seed(time.Now().Unix())
 		ParseConfig(cmd, args)
