@@ -23,7 +23,7 @@ var conf config.Config
 var encryptor *aes.Encryptor
 
 var ciphers = map[string]struct{}{
-	"aes-256-ecb": {},
+	//"aes-256-ecb": {},
 	"aes-256-cbc": {},
 	"aes-256-ctr": {},
 	"aes-256-cfb": {},
@@ -46,8 +46,9 @@ var rootCmd = &cobra.Command{
 %s encrypt -g -f your.file -o ciphered.file	自动生成密钥对并加密文件
 %s encrypt --public-key public.key --security aes-256-cbc -f your.file -o ciphered.file 使用指定公钥与加密算法
 %s decrypt --private-key private.key -f your-src.file 使用指定私钥解密指定文件，并覆盖原文件
+%s decrypt --private-key private.key --security aes-256-cbc -f your-src.file 使用指定私钥 算法 解密指定文件，并覆盖原文件
 %s decrypt --private-key private.key -f your-src.file -o unciphered.file 使用指定私钥解密指定文件，不覆盖原文件`,
-		version.App, version.App, version.App, version.App, version.App, version.App),
+		version.App, version.App, version.App, version.App, version.App, version.App, version.App),
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
 		rand.Seed(time.Now().Unix())
 		ParseConfig(cmd, args)
@@ -81,7 +82,7 @@ func init() {
 	rootCmd.PersistentFlags().String("private-key", "", `私钥, 解密时必填`)
 	rootCmd.PersistentFlags().StringP("security", "s", "aes-256-cbc", `加密方式, 默认 aes-256-cbc
 支持如下方式
-aes-256-ecb aes-256-cbc aes-256-ctr aes-256-cbf aes-256-ofb`)
+aes-256-cbc aes-256-ctr aes-256-cfb aes-256-ofb`)
 	rootCmd.PersistentFlags().StringP("file", "f", "", `加密/解密的输入文件, 必填`)
 	rootCmd.PersistentFlags().StringP("out", "o", "", `加密/解密的输出文件, 不填则默认覆盖原文件`)
 	//rootCmd.PersistentFlags().Int32P("nonce", "n", 0, `随机数, 不大于2^32, 不传则系统随机生成`)
