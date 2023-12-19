@@ -133,7 +133,7 @@ func InitDecCipher(c *config.Config) EncryptionFile.DecCipher {
 	case aes.ModeCBC:
 		return EncryptionFile.GenDecCipher(cipher.NewCBCDecrypter)
 	case aes.ModeCFB:
-		return EncryptionFile.GenDecCipher(cipher.NewCFBEncrypter)
+		return EncryptionFile.GenDecCipher(cipher.NewCFBDecrypter)
 	case aes.ModeCTR:
 		return EncryptionFile.GenDecCipher(cipher.NewCTR)
 	case aes.ModeOFB:
