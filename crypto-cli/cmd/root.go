@@ -41,10 +41,13 @@ var rootCmd = &cobra.Command{
 通过 HASH(MD5) 算法支持文件自校验.
 
 使用示例:
-%s encrypt --public-key public.key -f your-src.file -o ciphered.file
-%s encrypt -g -f your.file -o ciphered.file
-%s encrypt --public-key public.key --security aes-256-cbc -f your.file -o ciphered.file
-%s decrypt --private-key private.key -f your-src.file -o unciphered.file`, version.App, version.App, version.App, version.App),
+%s encrypt --public-key public.key -f your-src.file 使用指定公钥加密文件，加密后的文件直接覆盖原文件
+%s encrypt --public-key public.key -f your-src.file -o ciphered.file 使用指定公钥加密文件，加密后的文件不覆盖原文件
+%s encrypt -g -f your.file -o ciphered.file	自动生成密钥对并加密文件
+%s encrypt --public-key public.key --security aes-256-cbc -f your.file -o ciphered.file 使用指定公钥与加密算法
+%s decrypt --private-key private.key -f your-src.file 使用指定私钥解密指定文件，并覆盖原文件
+%s decrypt --private-key private.key -f your-src.file -o unciphered.file 使用指定私钥解密指定文件，不覆盖原文件`,
+		version.App, version.App, version.App, version.App, version.App, version.App),
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
 		rand.Seed(time.Now().Unix())
 		ParseConfig(cmd, args)
