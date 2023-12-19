@@ -163,7 +163,7 @@ func EncData(cmd *cobra.Command, args []string) {
 
 	var pubKey []byte
 	var err error
-	if conf.PublicKey == "" {
+	if conf.PublicKey != "" {
 		pubKey, err = os.ReadFile(conf.PublicKey)
 		if err != nil {
 			log.Fatalf("[FATA] read public key error:%s, key:%s", err, conf.PublicKey)

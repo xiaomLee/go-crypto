@@ -10,7 +10,7 @@ LDFLAGS += -X "$(PROJECT)/version.GitBranch=$(shell git rev-parse --abbrev-ref H
 LDFLAGS += -X "$(PROJECT)/version.App=$(APP)"
 
 build: clean output
-	GOOS=$(GOOS) GOARCH=$(GOARCH) go build -ldflags '$(LDFLAGS)' -o $(OUTPUT)/$(APP) crypto-cli/main.go
+	GOOS=$(GOOS) GOARCH=$(GOARCH) go build --trimpath -ldflags '$(LDFLAGS)' -o $(OUTPUT)/$(APP) crypto-cli/main.go
 
 clean:
 	rm -rf $(OUTPUT)
